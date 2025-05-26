@@ -97,19 +97,23 @@ render() {
     console.log('Rendering ideas...');
     this._ideaListEl.innerHTML = this._ideas
         .map((idea) => {
-            const tagClass = this.getTagClass(idea.tag || '');  // Default to empty string if tag is missing
-            const tagText = (idea.tag || 'No Tag').toUpperCase();  // Default to 'No Tag' if missing
-            return `
-                <div class="card" data-id="${idea._id}"> 
-                    <button class="delete"><i class="fas fa-times"></i></button>
-                    <h3>${idea.text}</h3>
-                    <p class="tag ${tagClass}">${tagText}</p>
-                    <p>
-                        Posted on <span class="date">${idea.date}</span> by
-                        <span class="author">${idea.username}</span>
-                    </p>
-                </div>
-            `;
+const tagClass = this.getTagClass(idea.tag || '');  // Default to empty string if tag is missing
+const tagText = (idea.tag || 'No Tag').toUpperCase();  // Default to 'No Tag' if missing
+const deleteBtn = 
+idea.username === localStorage.
+getItem('username') ? `<button class="delete"><i class="fas fa-times"></i></button>`
+: '';
+         return `
+          <div class="card" data-id="${idea._id}"> 
+          ${deleteBtn}
+          <h3>${idea.text}</h3>
+          <p class="tag ${tagClass}">${tagText}</p>
+          <p>
+          Posted on <span class="date">${idea.date}</span> by
+          <span class="author">${idea.username}</span>
+          </p>
+          </div>
+          `;
         })
         .join('');
         this.addEventListeners();
@@ -119,3 +123,4 @@ export default IdeaList;
 
 //---------------------
 
+//++==================
